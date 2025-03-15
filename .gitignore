@@ -10,3 +10,4 @@
 
 # Local database
 local.db
+*.sql

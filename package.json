@@ -11,7 +11,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
-    "db:seed": "tsx app/db/seed.ts"
+    "db:push:prod": "dotenvx run -f .env.production  -- drizzle-kit push",
+    "db:dump": "sqlite3 local.db \".dump\" > local-db_dump.sql"
   },
   "dependencies": {
     "@libsql/client": "^0.14.0",
