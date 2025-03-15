@@ -1,7 +1,7 @@
 import { db } from "~/db";
 import type { Route } from "./+types/home";
 import { artists, authors, episodes, songs } from "~/db/schema";
-import { eq, sql } from "drizzle-orm";
+import { eq, sql, desc } from "drizzle-orm";
 import JinglesTable, { columns } from "~/components/jingles-table";
 
 export function meta({}: Route.MetaArgs) {
@@ -27,6 +27,7 @@ export async function loader() {
     .leftJoin(artists, eq(songs.artistId, artists.id))
     .leftJoin(episodes, eq(songs.episodeId, episodes.id))
     .leftJoin(authors, eq(songs.authorId, authors.id))
+    .orderBy(desc(songs.createdAt))
     .limit(10);
 
   return { jingles };

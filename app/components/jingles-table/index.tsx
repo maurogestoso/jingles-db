@@ -42,7 +42,10 @@ export const columns: ColumnDef<Jingle>[] = [
     cell: ({ row }) => {
       const url = String(row.getValue("youtubeUrl"));
       return (
-        <a href={url} className="text-lg font-bold text-red-600 underline">
+        <a
+          href={url}
+          className="text-md font-bold text-red-600 border border-red-600 rounded-md p-1"
+        >
           YT
         </a>
       );
