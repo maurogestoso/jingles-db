@@ -2,6 +2,7 @@ import { db } from "~/db";
 import type { Route } from "./+types/home";
 import { artists, authors, episodes, songs } from "~/db/schema";
 import { eq, sql } from "drizzle-orm";
+import JinglesTable, { columns } from "~/components/jingles-table";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -35,19 +36,12 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const { jingles } = loaderData;
   return (
     <>
-      <h1 className="text-4xl font-bold">Fabrica de Jingles DB</h1>
+      <div className="mx-auto max-w-7xl p-4">
+        <h1 className="text-4xl font-bold mb-6">Fabrica de Jingles DB</h1>
 
-      <h2 className="text-3xl font-bold">Jingles mas recientes</h2>
-      <ul className="list-disc list-inside">
-        {jingles.map((jingle) => (
-          <li key={jingle.id}>
-            <a
-              className="text-blue-500 hover:text-blue-600"
-              href={jingle.youtubeUrl}
-            >{`${jingle.name} - ${jingle.artist}`}</a>
-          </li>
-        ))}
-      </ul>
+        <h2 className="text-3xl font-bold mb-4">Jingles mas recientes</h2>
+        <JinglesTable columns={columns} data={jingles} />
+      </div>
     </>
   );
 }
