@@ -26,7 +26,7 @@ turso db shell jingles < local-db_dump.sql
 
 ### Como uso prompts de LLMs para obtener datos
 
-Parandome en los hombres de gigantes, utilizo los comentarios de cada video en los que se detallan los `timestamps`, canciones, artistas y autores de cada jingle. Copio el comentario, la URL del video y la fecha de publicacion (en la descripcion) y los pego en el prompt `prompts/extract-timestamps.txt`. De momento este proceso es bastante artesanal y requiere prestar atencion al formato del comentario (que no siempre es el mismo) y ajustar el prompt. Con el JSON que devuelve ChatGPT creo un archivo en `app/db/seed` y lo utilizo como argumento para el script `app/db/seed.ts`
+Parandome en los hombros de gigantes, utilizo los comentarios de cada video en los que se detallan los `timestamps`, canciones, artistas y autores de cada jingle. Copio el comentario, la URL del video y la fecha de publicacion (en la descripcion) y los pego en el prompt `prompts/extract-timestamps.txt`. De momento este proceso es bastante artesanal y requiere prestar atencion al formato del comentario (que no siempre es el mismo) y ajustar el prompt. Con el JSON que devuelve ChatGPT creo un archivo en `app/db/seed` y lo utilizo como argumento para el script `app/db/seed.ts`
 
 ```markdown
 prompts/extract-timestamps.txt
