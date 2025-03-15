@@ -1,7 +1,7 @@
 import { db } from "~/db";
 import type { Route } from "./+types/home";
-import { artists, episodes, songs } from "~/db/schema";
-import { eq } from "drizzle-orm";
+import { artists, authors, episodes, songs } from "~/db/schema";
+import { eq, sql } from "drizzle-orm";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -19,12 +19,13 @@ export async function loader() {
       id: songs.id,
       name: songs.name,
       artist: artists.name,
-      episodeYoutubeUrl: episodes.youtubeUrl,
-      timestamp: songs.timestamp,
+      author: authors.name,
+      youtubeUrl: sql<string>`CONCAT(${episodes.youtubeUrl}, '&t=', ${songs.timestamp}, 's')`,
     })
     .from(songs)
     .leftJoin(artists, eq(songs.artistId, artists.id))
     .leftJoin(episodes, eq(songs.episodeId, episodes.id))
+    .leftJoin(authors, eq(songs.authorId, authors.id))
     .limit(10);
 
   return { jingles };
@@ -42,7 +43,7 @@ export default function Home({ loaderData }: Route.ComponentProps) {
           <li key={jingle.id}>
             <a
               className="text-blue-500 hover:text-blue-600"
-              href={`${jingle.episodeYoutubeUrl}&t=${jingle.timestamp}s`}
+              href={jingle.youtubeUrl}
             >{`${jingle.name} - ${jingle.artist}`}</a>
           </li>
         ))}
