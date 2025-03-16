@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { type } from "arktype";
 import {
   Table,
   TableBody,
@@ -13,15 +14,15 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Jingle = {
-  id: number;
-  name: string;
-  artist: string | null;
-  author: string | null;
-  youtubeUrl: string;
-};
+export const $Jingle = type({
+  id: "number",
+  name: "string",
+  artist: "string",
+  author: "string|null",
+  youtubeUrl: "string",
+});
+
+export type Jingle = typeof $Jingle.infer;
 
 export const columns: ColumnDef<Jingle>[] = [
   {
