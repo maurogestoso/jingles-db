@@ -3,6 +3,9 @@ import type { Route } from "./+types/home";
 import { artists, authors, episodes, songs } from "~/db/schema";
 import { eq, sql, desc } from "drizzle-orm";
 import JinglesTable, { columns } from "~/components/jingles-table";
+import { Form } from "react-router";
+import { Input } from "~/components/ui/input";
+import { Button } from "~/components/ui/button";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -24,8 +27,8 @@ export async function loader() {
       youtubeUrl: sql<string>`CONCAT(${episodes.youtubeUrl}, '&t=', ${songs.timestamp}, 's')`,
     })
     .from(songs)
-    .leftJoin(artists, eq(songs.artistId, artists.id))
-    .leftJoin(episodes, eq(songs.episodeId, episodes.id))
+    .innerJoin(artists, eq(songs.artistId, artists.id))
+    .innerJoin(episodes, eq(songs.episodeId, episodes.id))
     .leftJoin(authors, eq(songs.authorId, authors.id))
     .orderBy(desc(songs.createdAt))
     .limit(10);
@@ -37,12 +40,20 @@ export default function Home({ loaderData }: Route.ComponentProps) {
   const { jingles } = loaderData;
   return (
     <>
-      <div className="mx-auto max-w-7xl p-4">
-        <h1 className="text-4xl font-bold mb-6">Fabrica de Jingles DB</h1>
+      <Form method="get" action="/search" className="mb-4">
+        <div className="flex justify-center items-center space-x-2">
+          <Input
+            type="search"
+            name="search"
+            className="border-blue-300 max-w-lg"
+            placeholder={`por ejemplo: "Let It Go", "Los Piojos" o "Marquitos"`}
+          />
+          <Button type="submit">Buscar</Button>
+        </div>
+      </Form>
 
-        <h2 className="text-3xl font-bold mb-4">Jingles mas recientes</h2>
-        <JinglesTable columns={columns} data={jingles} />
-      </div>
+      <h2 className="text-3xl font-bold mb-4">Jingles mas recientes</h2>
+      <JinglesTable columns={columns} data={jingles} />
     </>
   );
 }
