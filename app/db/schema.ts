@@ -1,5 +1,11 @@
 import { sql } from "drizzle-orm";
-import { integer, real, sqliteTable, text, primaryKey } from "drizzle-orm/sqlite-core";
+import {
+  integer,
+  real,
+  sqliteTable,
+  text,
+  primaryKey,
+} from "drizzle-orm/sqlite-core";
 
 export const artists = sqliteTable("artists", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -46,10 +52,14 @@ export const tags = sqliteTable("tags", {
 export const songs = sqliteTable("songs", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
-  artistId: integer("artist_id").notNull().references(() => artists.id),
+  artistId: integer("artist_id")
+    .notNull()
+    .references(() => artists.id),
   authorId: integer("author_id").references(() => authors.id),
-  episodeId: integer("episode_id").notNull().references(() => episodes.id),
-  timestamp: real("timestamp").notNull(), // in seconds
+  episodeId: integer("episode_id")
+    .notNull()
+    .references(() => episodes.id),
+  timestamp: integer("timestamp").notNull(), // in seconds
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
@@ -62,8 +72,12 @@ export const songs = sqliteTable("songs", {
 export const songsToTags = sqliteTable(
   "songs_to_tags",
   {
-    songId: integer("song_id").notNull().references(() => songs.id),
-    tagId: integer("tag_id").notNull().references(() => tags.id),
+    songId: integer("song_id")
+      .notNull()
+      .references(() => songs.id),
+    tagId: integer("tag_id")
+      .notNull()
+      .references(() => tags.id),
     createdAt: integer("created_at", { mode: "timestamp" })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
