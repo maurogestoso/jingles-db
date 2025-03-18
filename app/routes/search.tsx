@@ -75,10 +75,11 @@ export default function Search({ loaderData }: Route.ComponentProps) {
       <div className="flex flex-col gap-2">
         {jingles.map((jingle, i) => (
           <article key={i}>
-            <Card className="flex flex-row justify-between">
+            <Card className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <CardHeader className="flex-1">
-                <CardTitle>
-                  "{jingle.name}" de {jingle.artistName}
+                <CardTitle className="flex flex-wrap">
+                  <span>"{jingle.name}"</span>
+                  <span> de {jingle.artistName}</span>
                 </CardTitle>
                 <CardDescription>
                   por {jingle.authorName || "Anónimo"}
