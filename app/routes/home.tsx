@@ -33,7 +33,7 @@ export default function Home({}: Route.ComponentProps) {
     return (
       <>
         <h2 className="text-2xl font-bold text-center mb-4">Buscar por:</h2>
-        <div className="flex justify-center items-center space-x-2">
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
           <Button
             className="bg-blue-500 hover:bg-blue-600 cursor-pointer"
             onClick={handleCriterioClick("artistas")}
