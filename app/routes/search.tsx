@@ -1,49 +1,100 @@
 import { db } from "~/db";
 import type { Route } from "./+types/search";
-import { redirect } from "react-router";
-import { sql } from "drizzle-orm";
-import JinglesTable, { $Jingle, columns } from "~/components/jingles-table";
-import { type } from "arktype";
+import { Link, redirect } from "react-router";
+import { sql, eq, like } from "drizzle-orm";
+import { artists, authors, episodes, songs } from "~/db/schema";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+import { Button } from "~/components/ui/button";
+import { Play as IconPlay } from "lucide-react";
+
+const columnByCriteria = new Map<
+  string,
+  typeof artists.name | typeof authors.name | typeof songs.name
+>([
+  ["artistas", artists.name],
+  ["jingleros", authors.name],
+  ["canciones", songs.name],
+]);
 
 export async function loader({ request }: Route.LoaderArgs) {
   const url = new URL(request.url);
-  const search = url.searchParams.get("search");
-  if (!search) {
+  const searchTerm = url.searchParams.get("busqueda");
+  if (!searchTerm) {
     return redirect("/");
   }
-  const likeSearch = `%${search}%`;
-
-  const result = await db.run(sql`
-    SELECT * FROM (
-        SELECT s.id as id, s.name as name, ar.name as artist, au.name as author, CONCAT(ep.youtube_url, '&t=', s.timestamp, 's') as youtubeUrl
-        FROM songs as s
-        JOIN artists as ar ON s.artist_id = ar.id
-        LEFT JOIN authors as au ON s.author_id = au.id
-        JOIN episodes as ep ON s.episode_id = ep.id
-    )
-    WHERE 
-        artist LIKE ${likeSearch} OR 
-        author LIKE ${likeSearch} OR 
-        name LIKE ${likeSearch}
-    `);
-
-  const jingles = $Jingle.array()(result.rows);
-  if (jingles instanceof type.errors) {
-    console.log("🚀 ~ loader ~ jingles:", jingles.issues);
-    return new Response("Invalid data returned from database", { status: 500 });
+  const criteria = url.searchParams.get("criterio");
+  if (!criteria) {
+    return redirect("/");
   }
 
-  return { jingles, searchTerm: search };
+  const criteriaColumn = columnByCriteria.get(criteria);
+  if (!criteriaColumn) {
+    return redirect("/");
+  }
+
+  const likeSearch = `%${searchTerm}%`;
+
+  const jingles = await db
+    .select({
+      name: songs.name,
+      artistName: artists.name,
+      authorName: authors.name,
+      youtubeUrl: sql<string>`CONCAT(${episodes.youtubeUrl}, '&t=', ${songs.timestamp}, 's')`,
+    })
+    .from(songs)
+    .innerJoin(artists, eq(songs.artistId, artists.id))
+    .leftJoin(authors, eq(songs.authorId, authors.id))
+    .innerJoin(episodes, eq(songs.episodeId, episodes.id))
+    .where(like(criteriaColumn, likeSearch));
+
+  return { jingles, searchTerm, criteria };
 }
 
 export default function Search({ loaderData }: Route.ComponentProps) {
-  const { jingles, searchTerm } = loaderData;
+  const { jingles, searchTerm, criteria } = loaderData;
   return (
     <>
+      <div className="mb-4">
+        ⬅️{" "}
+        <Link
+          to="/"
+          className="text-blue-500 hover:underline hover:text-blue-600"
+        >
+          Volver a buscar
+        </Link>
+      </div>
       <h2 className="text-xl font-bold mb-4">
-        Resultados de busqueda: {searchTerm}
+        Búsqueda por {criteria}: {`"${searchTerm}"`}
       </h2>
-      <JinglesTable columns={columns} data={jingles} />
+      <div className="flex flex-col gap-2">
+        {jingles.map((jingle, i) => (
+          <article key={i}>
+            <Card className="flex flex-row justify-between">
+              <CardHeader className="flex-1">
+                <CardTitle>
+                  "{jingle.name}" de {jingle.artistName}
+                </CardTitle>
+                <CardDescription>
+                  por {jingle.authorName || "Anónimo"}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <a href={jingle.youtubeUrl} target="_blank">
+                  <Button className="bg-red-600 hover:bg-red-700 cursor-pointer">
+                    <IconPlay /> Ver en YouTube
+                  </Button>
+                </a>
+              </CardContent>
+            </Card>
+          </article>
+        ))}
+      </div>
     </>
   );
 }
