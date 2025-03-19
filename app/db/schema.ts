@@ -47,6 +47,9 @@ export const tags = sqliteTable("tags", {
   createdAt: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: integer("updated_at", { mode: "timestamp" })
+    .notNull()
+    .default(sql`CURRENT_TIMESTAMP`),
 });
 
 export const songs = sqliteTable("songs", {
@@ -79,6 +82,9 @@ export const songsToTags = sqliteTable(
       .notNull()
       .references(() => tags.id),
     createdAt: integer("created_at", { mode: "timestamp" })
+      .notNull()
+      .default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: integer("updated_at", { mode: "timestamp" })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP`),
   },
