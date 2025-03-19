@@ -80,9 +80,9 @@ export default function Search({ loaderData }: Route.ComponentProps) {
           <article key={i}>
             <Card className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
               <CardHeader className="flex-1">
-                <CardTitle className="flex flex-wrap">
+                <CardTitle className="flex flex-wrap gap-1">
                   <span>"{jingle.name}"</span>
-                  <span> de {jingle.artistName}</span>
+                  <span>de {jingle.artistName}</span>
                 </CardTitle>
                 <CardDescription>
                   por {jingle.authorName || "Anónimo"}
