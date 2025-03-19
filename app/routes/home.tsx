@@ -2,6 +2,7 @@ import type { Route } from "./+types/home";
 import { Form, useSearchParams } from "react-router";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
+import { Search as SearchIcon } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -13,7 +14,8 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
-const placeholderByCriteria = new Map([
+type Criteria = "artistas" | "canciones" | "jingleros";
+const placeholderByCriteria = new Map<Criteria, string>([
   ["artistas", "por ejemplo: 'Los Piojos'"],
   ["canciones", "por ejemplo: 'Barro tal vez'"],
   ["jingleros", "por ejemplo: 'Negro Andante'"],
@@ -21,60 +23,84 @@ const placeholderByCriteria = new Map([
 
 export default function Home({}: Route.ComponentProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const criterio = searchParams.get("criterio");
+  const selectedCriteria = searchParams.get("criterio") as Criteria;
 
-  const handleCriterioClick = (criterio: string) => () => {
+  const handleCriteriaClick = (criteria: Criteria) => () => {
     const params = new URLSearchParams();
-    params.set("criterio", criterio);
+    params.set("criterio", criteria);
     setSearchParams(params);
   };
 
-  if (!criterio) {
+  if (!selectedCriteria) {
     return (
       <>
-        <h2 className="text-2xl font-bold text-center mb-4">Buscar por:</h2>
+        <h2 className="text-2xl font-bold text-center mb-4 text-blue-900">
+          Buscar por:
+        </h2>
         <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
-          <Button
-            className="bg-blue-500 hover:bg-blue-600 cursor-pointer"
-            onClick={handleCriterioClick("artistas")}
+          <CriteriaButton
+            bgColor="bg-red-600"
+            onClick={handleCriteriaClick("artistas")}
           >
             Artistas
-          </Button>
-          <Button
-            className="bg-red-500 hover:bg-red-600 cursor-pointer"
-            onClick={handleCriterioClick("canciones")}
+          </CriteriaButton>
+          <CriteriaButton
+            bgColor="bg-green-600"
+            onClick={handleCriteriaClick("canciones")}
           >
             Canciones
-          </Button>
-          <Button
-            className="bg-green-500 hover:bg-green-600 cursor-pointer"
-            onClick={handleCriterioClick("jingleros")}
+          </CriteriaButton>
+          <CriteriaButton
+            bgColor="bg-blue-600"
+            onClick={handleCriteriaClick("jingleros")}
           >
             Jingleros
-          </Button>
+          </CriteriaButton>
         </div>
       </>
     );
   } else {
     return (
-      <Form method="get" action={`/busqueda`} className="mb-4">
-        <div className="flex justify-center items-center space-x-2">
-          <input type="hidden" name="criterio" value={criterio} />
+      <Form method="get" action={`/busqueda`} className="flex flex-col gap-4">
+        <h2 className="text-2xl font-bold text-center text-blue-900 self-start">
+          Busqueda por {selectedCriteria}:
+        </h2>
+        <div className="flex flex-col gap-2">
+          <input type="hidden" name="criterio" value={selectedCriteria} />
           <Input
             type="text"
             name="busqueda"
-            className="border-blue-300 max-w-lg"
-            placeholder={placeholderByCriteria.get(criterio!)}
+            className="h-16 rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2"
+            placeholder={placeholderByCriteria.get(selectedCriteria)}
             autoFocus
           />
           <Button
             type="submit"
-            className="bg-green-500 hover:bg-green-600 cursor-pointer"
+            className="bg-green-500 hover:bg-green-600 cursor-pointer text-xl h-16 rounded-xl"
           >
-            Buscar
+            <SearchIcon /> Buscar
           </Button>
         </div>
       </Form>
     );
   }
+}
+
+function CriteriaButton({
+  bgColor,
+  children,
+  onClick,
+}: {
+  bgColor: string;
+  children: React.ReactNode;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      className={`${bgColor} cursor-pointer w-[200px] py-6 rounded-xl text-white`}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 }
