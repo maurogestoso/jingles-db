@@ -17,20 +17,10 @@ export default function Layout() {
       <main className="max-w-screen-sm mx-auto p-4 flex-grow w-full">
         <Outlet />
       </main>
-      <footer className="bg-gray-100 py-4">
+      <footer className="py-4 text-sm">
         <div className="max-w-screen-sm mx-auto px-4 flex justify-between items-center text-gray-600">
-          <span>EJLE ©️ 2025</span>
-          <span>Hecho con ♥️ y ☕ por Mauro</span>
-          <span>
-            <a
-              href="https://github.com/maurogestoso/jingles-db"
-              className="underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {"<Código />"}
-            </a>
-          </span>
+          <span className="">EJLE ©️ 2025</span>
+          <span>Hecho con ♥️ y ☕ por MG</span>
         </div>
       </footer>
     </div>
