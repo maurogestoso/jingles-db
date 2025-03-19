@@ -13,6 +13,16 @@ import {
 import { Button } from "~/components/ui/button";
 import { Play as IconPlay } from "lucide-react";
 
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Resultados de búsqueda - Jingles DB" },
+    {
+      name: "description",
+      content: "Base de datos de la Fabrica de Jingles de Gelatina",
+    },
+  ];
+}
+
 const columnByCriteria = new Map<
   string,
   typeof artists.name | typeof authors.name | typeof songs.name
