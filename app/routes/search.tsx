@@ -89,7 +89,11 @@ export default function Search({ loaderData }: Route.ComponentProps) {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <a href={jingle.youtubeUrl} target="_blank">
+                <a
+                  href={jingle.youtubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <Button className="bg-red-600 hover:bg-red-700 cursor-pointer">
                     <IconPlay /> Ver en YouTube
                   </Button>
