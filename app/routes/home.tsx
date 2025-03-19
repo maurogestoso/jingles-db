@@ -1,8 +1,8 @@
 import type { Route } from "./+types/home";
-import { Form, useSearchParams } from "react-router";
+import { Form, useNavigation, useSearchParams } from "react-router";
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
-import { Search as SearchIcon } from "lucide-react";
+import { Search as SearchIcon, LoaderCircle } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -24,6 +24,7 @@ const placeholderByCriteria = new Map<Criteria, string>([
 export default function Home({}: Route.ComponentProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedCriteria = searchParams.get("criterio") as Criteria;
+  const navigation = useNavigation();
 
   const handleCriteriaClick = (criteria: Criteria) => () => {
     const params = new URLSearchParams();
@@ -78,7 +79,15 @@ export default function Home({}: Route.ComponentProps) {
             type="submit"
             className="bg-green-500 hover:bg-green-600 cursor-pointer text-xl h-16 rounded-xl"
           >
-            <SearchIcon /> Buscar
+            {navigation.formAction === "/busqueda" ? (
+              <>
+                <LoaderCircle className="animate-spin" /> Buscando...
+              </>
+            ) : (
+              <>
+                <SearchIcon /> Buscar
+              </>
+            )}
           </Button>
         </div>
       </Form>
