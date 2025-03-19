@@ -2,27 +2,33 @@ import { useRef, useState } from "react";
 import { Outlet } from "react-router";
 
 export default function Layout() {
-  const { eees, onMouseEnter, onMouseLeave } = useJingleeesAnimation();
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="p-4 flex justify-center">
-        <h1
-          className="text-4xl font-bold mb-6"
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-        >
-          Jingl{eees}s! DB
-        </h1>
-      </header>
-      <main className="max-w-screen-sm mx-auto p-4 flex-grow w-full">
-        <Outlet />
-      </main>
-      <footer className="py-4 text-sm">
-        <div className="max-w-screen-sm mx-auto px-4 flex justify-between items-center text-gray-600">
-          <span className="">EJLE ©️ 2025</span>
-          <span>Hecho con ♥️ y ☕ por MG</span>
-        </div>
-      </footer>
+    <div className="p-2 min-h-screen flex">
+      <div className="flex flex-col border-2 border-blue-800 rounded-lg flex-grow">
+        <header className="p-4 flex justify-between">
+          <h1 className="text-4xl font-bold mb-6 text-blue-900">
+            Jingleees! DB
+          </h1>
+          <img src="/gelatina-logo.png" alt="gelatina" className="size-10" />
+        </header>
+        <main className="max-w-screen-sm mx-auto p-4 flex-grow w-full">
+          <Outlet />
+        </main>
+        <footer className="py-2 text-sm border-t border-blue-800 border-dashed">
+          <div className="max-w-screen-sm mx-auto px-4 flex justify-between items-center text-gray-600">
+            <p className="">EJLE ©️ 2025</p>
+            <p>
+              Hecho con ♥️ y ☕ por MG{" "}
+              <a
+                href="https://github.com/maurogestoso/jingles-db"
+                target="_blank"
+              >
+                {"</>"}
+              </a>
+            </p>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 }
