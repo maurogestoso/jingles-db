@@ -73,6 +73,9 @@ export default function Search({ loaderData }: Route.ComponentProps) {
         Búsqueda por {criteria}: {`"${searchTerm}"`}
       </h2>
       <div className="flex flex-col gap-2">
+        {jingles.length === 0 && (
+          <p className="text-gray-500">No se encontraron resultados :(</p>
+        )}
         {jingles.map((jingle, i) => (
           <article key={i}>
             <Card className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
