@@ -72,10 +72,7 @@ export default function Search({ loaderData }: Route.ComponentProps) {
     <>
       <div className="mb-4">
         ⬅️{" "}
-        <Link
-          to="/"
-          className="text-blue-500 hover:underline hover:text-blue-600"
-        >
+        <Link to="/" className="text-blue-800 hover:underline">
           Volver a buscar
         </Link>
       </div>
@@ -88,11 +85,11 @@ export default function Search({ loaderData }: Route.ComponentProps) {
         )}
         {jingles.map((jingle, i) => (
           <article key={i}>
-            <Card className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <Card className="flex flex-col sm:flex-row sm:items-center sm:justify-between border-blue-800">
               <CardHeader className="flex-1">
-                <CardTitle className="flex flex-wrap gap-1">
-                  <span>"{jingle.name}"</span>
-                  <span>de {jingle.artistName}</span>
+                <CardTitle>
+                  <p className="text-xl font-bold">{jingle.name}</p>
+                  <p className="text-lg">{jingle.artistName}</p>
                 </CardTitle>
                 <CardDescription>
                   por {jingle.authorName || "Anónimo"}

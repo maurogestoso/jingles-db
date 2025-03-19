@@ -9,7 +9,9 @@ export default function Layout() {
           <h1 className="text-4xl font-bold mb-6 text-blue-900">
             Jingleees! DB
           </h1>
-          <img src="/gelatina-logo.png" alt="gelatina" className="size-10" />
+          <a href="https://gelatina.com.ar/" target="_blank">
+            <img src="/gelatina-logo.png" alt="gelatina" className="size-10" />
+          </a>
         </header>
         <main className="max-w-screen-sm mx-auto p-4 flex-grow w-full">
           <Outlet />

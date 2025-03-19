@@ -39,19 +39,19 @@ export default function Home({}: Route.ComponentProps) {
         </h2>
         <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
           <CriteriaButton
-            bgColor="bg-red-600"
+            borderColor="border-red-600"
             onClick={handleCriteriaClick("artistas")}
           >
             Artistas
           </CriteriaButton>
           <CriteriaButton
-            bgColor="bg-green-600"
+            borderColor="border-green-600"
             onClick={handleCriteriaClick("canciones")}
           >
             Canciones
           </CriteriaButton>
           <CriteriaButton
-            bgColor="bg-blue-600"
+            borderColor="border-blue-600"
             onClick={handleCriteriaClick("jingleros")}
           >
             Jingleros
@@ -87,17 +87,17 @@ export default function Home({}: Route.ComponentProps) {
 }
 
 function CriteriaButton({
-  bgColor,
+  borderColor,
   children,
   onClick,
 }: {
-  bgColor: string;
+  borderColor: string;
   children: React.ReactNode;
   onClick: () => void;
 }) {
   return (
     <button
-      className={`${bgColor} cursor-pointer w-[200px] py-6 rounded-xl text-white`}
+      className={`border-2 ${borderColor} cursor-pointer w-[200px] py-6 rounded-xl text-xl`}
       onClick={onClick}
     >
       {children}
