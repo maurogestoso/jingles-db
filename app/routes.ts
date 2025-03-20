@@ -11,5 +11,7 @@ export default [
     route("/busqueda", "routes/search.tsx"),
     route("/programas", "routes/episodes-index.tsx"),
     route("/programas/:id", "routes/episodes-detail.tsx"),
+    route("/jingleros", "routes/authors-index.tsx"),
+    route("/jingleros/:id", "routes/authors-detail.tsx"),
   ]),
 ] satisfies RouteConfig;
