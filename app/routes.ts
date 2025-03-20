@@ -9,5 +9,7 @@ export default [
   layout("layout.tsx", [
     index("routes/home.tsx"),
     route("/busqueda", "routes/search.tsx"),
+    route("/programas", "routes/episodes-index.tsx"),
+    route("/programas/:id", "routes/episodes-detail.tsx"),
   ]),
 ] satisfies RouteConfig;
