@@ -5,15 +5,13 @@ export default function Layout() {
   return (
     <div className="p-2 min-h-screen flex">
       <div className="flex flex-col border-2 border-blue-800 rounded-lg flex-grow">
-        <header className="p-4 flex justify-between">
-          <h1 className="text-4xl font-bold mb-6 text-blue-900">
-            Jingleees! DB
-          </h1>
+        <header className="p-4 flex justify-between mb-4">
+          <h1 className="text-4xl font-bold text-blue-900">Jingleees! DB</h1>
           <a href="https://gelatina.com.ar/" target="_blank">
             <img src="/gelatina-logo.png" alt="gelatina" className="size-10" />
           </a>
         </header>
-        <main className="max-w-screen-sm mx-auto p-4 flex-grow w-full">
+        <main className="max-w-screen-sm mx-auto px-4 flex-grow w-full">
           <Outlet />
         </main>
         <footer className="py-2 text-sm border-t border-blue-800 border-dashed">
