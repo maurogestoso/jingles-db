@@ -9,5 +9,4 @@
 .env.*
 
 # Local database
-local.db
 *.sql
