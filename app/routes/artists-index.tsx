@@ -38,7 +38,7 @@ export default function ArtistsIndexRoute({
         type="text"
         value={filter}
         onChange={(e) => setFilter(e.target.value.toLowerCase())}
-        placeholder="Filtrar artista"
+        placeholder="Buscar artista"
       />
       <ul className="list-disc list-inside">
         {artists.map((artist) => (
