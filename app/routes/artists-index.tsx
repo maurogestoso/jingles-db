@@ -34,11 +34,12 @@ export default function ArtistsIndexRoute({
     <>
       <h2 className="font-bold text-2xl mb-4">Artistas</h2>
       <Input
-        className="mb-4"
+        className="mb-4 focus:ring focus:ring-offset-2 focus:ring-offset-blue-500"
         type="text"
         value={filter}
         onChange={(e) => setFilter(e.target.value.toLowerCase())}
         placeholder="Buscar artista"
+        autoFocus
       />
       <ul className="list-disc list-inside">
         {artists.map((artist) => (
