@@ -2,6 +2,8 @@ import { db } from "~/db";
 import { artists, songs } from "~/db/schema";
 import type { Route } from "./+types/artists-index";
 import { sql, eq, desc } from "drizzle-orm";
+import { useState } from "react";
+import { Input } from "~/components/ui/input";
 
 export async function loader() {
   const allArtists = await db
@@ -21,11 +23,25 @@ export async function loader() {
 export default function ArtistsIndexRoute({
   loaderData,
 }: Route.ComponentProps) {
+  const [filter, setFilter] = useState("");
+  const artists = filter
+    ? loaderData.artists.filter((artist) =>
+        artist.name.toLowerCase().includes(filter)
+      )
+    : loaderData.artists;
+
   return (
     <>
       <h2 className="font-bold text-2xl mb-4">Artistas</h2>
+      <Input
+        className="mb-4"
+        type="text"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value.toLowerCase())}
+        placeholder="Filtrar artista"
+      />
       <ul className="list-disc list-inside">
-        {loaderData.artists.map((artist) => (
+        {artists.map((artist) => (
           <li key={artist.id}>
             <a
               href={`/artistas/${artist.id}`}
