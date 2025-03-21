@@ -13,5 +13,7 @@ export default [
     route("/programas/:id", "routes/episodes-detail.tsx"),
     route("/jingleros", "routes/authors-index.tsx"),
     route("/jingleros/:id", "routes/authors-detail.tsx"),
+    route("/artistas", "routes/artists-index.tsx"),
+    route("/artistas/:id", "routes/artists-detail.tsx"),
   ]),
 ] satisfies RouteConfig;

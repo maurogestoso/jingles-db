@@ -1,5 +1,5 @@
 import type { Config } from "@react-router/dev/config";
-import { authors, episodes } from "./app/db/schema";
+import { artists, authors, episodes } from "./app/db/schema";
 import { drizzle } from "drizzle-orm/libsql";
 
 export const db = drizzle("file:local.db");
@@ -16,6 +16,9 @@ export default {
     const authorIds = await db.select({ id: authors.id }).from(authors);
     const authorRoutes = authorIds.map((author) => `/jingleros/${author.id}`);
 
-    return ["/programas", ...episodeRoutes, ...authorRoutes];
+    const artistIds = await db.select({ id: artists.id }).from(artists);
+    const artistRoutes = artistIds.map((artist) => `/artistas/${artist.id}`);
+
+    return ["/programas", ...episodeRoutes, ...authorRoutes, ...artistRoutes];
   },
 } satisfies Config;
