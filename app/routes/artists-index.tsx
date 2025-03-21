@@ -1,14 +1,19 @@
 import { db } from "~/db";
-import { artists } from "~/db/schema";
+import { artists, songs } from "~/db/schema";
 import type { Route } from "./+types/artists-index";
+import { sql, eq, desc } from "drizzle-orm";
 
 export async function loader() {
   const allArtists = await db
     .select({
       id: artists.id,
       name: artists.name,
+      songCount: sql<number>`COUNT(${songs.id})`,
     })
-    .from(artists);
+    .from(artists)
+    .innerJoin(songs, eq(artists.id, songs.artistId))
+    .groupBy(artists.id, artists.name)
+    .orderBy(desc(sql<number>`COUNT(${songs.id})`));
 
   return { artists: allArtists };
 }
@@ -28,6 +33,7 @@ export default function ArtistsIndexRoute({
             >
               {artist.name}
             </a>
+            <span className="text-sm ml-1">({artist.songCount})</span>
           </li>
         ))}
       </ul>
