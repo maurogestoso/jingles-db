@@ -11,7 +11,7 @@ export default function Layout() {
             <img src="/gelatina-logo.png" alt="gelatina" className="size-10" />
           </a>
         </header>
-        <main className="max-w-screen-sm mx-auto px-4 flex-grow w-full">
+        <main className="max-w-screen-sm mx-auto px-4 flex-grow w-full mb-8">
           <Outlet />
         </main>
         <footer className="py-2 text-sm border-t border-blue-800 border-dashed">
