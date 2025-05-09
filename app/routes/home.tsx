@@ -49,6 +49,12 @@ export default function Home({ loaderData }: Route.ComponentProps) {
           </Link>
           <Link
             className="text-2xl border-2 py-4 px-8 rounded-xl w-[200px] text-center text-blue-600 border-blue-600"
+            to="/tags"
+          >
+            Tags
+          </Link>
+          <Link
+            className="text-2xl border-2 py-4 px-8 rounded-xl w-[200px] text-center text-pink-600 border-pink-600"
             to="/programas"
           >
             Programas

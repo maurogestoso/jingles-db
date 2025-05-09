@@ -15,5 +15,6 @@ export default [
     route("/jingleros/:id", "routes/authors-detail.tsx"),
     route("/artistas", "routes/artists-index.tsx"),
     route("/artistas/:id", "routes/artists-detail.tsx"),
+    route("/tags", "routes/tags-index.tsx"),
   ]),
 ] satisfies RouteConfig;
