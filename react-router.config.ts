@@ -25,8 +25,11 @@ export default {
     return [
       "/programas",
       ...episodeRoutes,
+      "/jingleros",
       ...authorRoutes,
+      "/artistas",
       ...artistRoutes,
+      "/tags",
       ...tagRoutes,
     ];
   },
