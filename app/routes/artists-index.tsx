@@ -1,7 +1,7 @@
 import { db } from "~/db";
 import { artists, songs } from "~/db/schema";
 import type { Route } from "./+types/artists-index";
-import { sql, eq, desc } from "drizzle-orm";
+import { sql, eq, asc } from "drizzle-orm";
 import { useState } from "react";
 import { Input } from "~/components/ui/input";
 
@@ -15,7 +15,7 @@ export async function loader() {
     .from(artists)
     .innerJoin(songs, eq(artists.id, songs.artistId))
     .groupBy(artists.id, artists.name)
-    .orderBy(desc(sql<number>`COUNT(${songs.id})`));
+    .orderBy(asc(artists.name));
 
   return { artists: allArtists };
 }
