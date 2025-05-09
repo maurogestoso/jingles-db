@@ -1,14 +1,23 @@
 import { useRef, useState } from "react";
-import { Outlet } from "react-router";
+import { Link, Outlet } from "react-router";
 
 export default function Layout() {
   return (
     <div className="p-2 min-h-screen flex">
       <div className="flex flex-col border-2 border-blue-800 rounded-lg flex-grow">
         <header className="p-4 flex justify-between mb-4">
-          <h1 className="text-4xl font-bold text-blue-900">
-            <a href="/">Jingleees! DB</a>
-          </h1>
+          <div className="flex gap-4 items-center">
+            <h1 className="text-4xl font-bold text-blue-900">
+              <Link to="/" className="hover:underline">
+                Jingleees! DB
+              </Link>
+            </h1>
+            <h3 className="text-lg font-bold text-blue-900">
+              <Link to="/que-es-esto" className="hover:underline">
+                ¿Qué es ésto?
+              </Link>
+            </h3>
+          </div>
           <a href="https://gelatina.com.ar/" target="_blank">
             <img src="/gelatina-logo.png" alt="gelatina" className="size-10" />
           </a>
