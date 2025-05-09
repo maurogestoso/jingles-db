@@ -1,17 +1,17 @@
-import {type} from 'arktype'
+import { type } from "arktype";
 
 const envSchema = type({
-    // Turso
+  // Turso
   TURSO_DATABASE_URL: "string",
   TURSO_AUTH_TOKEN: "string",
-})
+});
 
-type Env = typeof envSchema.infer
+type Env = typeof envSchema.infer;
 
-const env = envSchema(process.env)
+const env = envSchema(process.env);
 
 if (env instanceof type.errors) {
-    throw env
+  throw env;
 }
 
-export default env as Env
+export default env as Env;
