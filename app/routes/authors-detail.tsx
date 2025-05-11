@@ -34,7 +34,6 @@ export async function loader({ params }: Route.LoaderArgs) {
       tags: sql<string>`JSON_GROUP_ARRAY(${tags.name})`
         .mapWith({
           mapFromDriverValue: (value: string) => {
-            console.log("🚀 ~ loader ~ value:", value);
             return (JSON.parse(value) as string[]).filter(Boolean);
           },
         })
