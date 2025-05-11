@@ -1,3 +1,4 @@
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -16,19 +17,23 @@ export default function SongCard({
     artist: string;
     author: string | null;
     youtubeUrl: string;
+    tags?: string[];
   };
 }) {
   return (
     <article>
-      <Card className="flex flex-row items-center justify-between border-blue-800">
-        <CardHeader className="flex-1">
-          <CardTitle>
-            <p className="text-lg font-bold leading-none mb-1">{song.name}</p>
-            <p className="text-md leading-none">{song.artist}</p>
-          </CardTitle>
-          <CardDescription>por {song.author || "Anónimo"}</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <Card className="border-blue-800">
+        <CardContent className="flex flex-row items-center justify-between">
+          <div>
+            <p className="text-lg font-bold leading-none mb-2">{song.name}</p>
+            <p className="text-md leading-none mb-2">{song.artist}</p>
+            <p className="text-md leading-none">
+              por {song.author || "Anónimo"}
+            </p>
+            <div className="flex gap-2 mt-4">
+              {song.tags && song.tags.map((tag) => <Badge>{tag}</Badge>)}
+            </div>
+          </div>
           <a href={song.youtubeUrl} target="_blank" rel="noopener noreferrer">
             <Button className="bg-red-600 hover:bg-red-700 cursor-pointer rounded-full text-center">
               <IconPlay /> Jingle!
