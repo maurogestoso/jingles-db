@@ -50,12 +50,15 @@ async function seed() {
     console.log("🌱 Seeding database...");
     console.log(`📄 Using episode data from: ${jsonPath}`);
 
+    const episodeDate = new Date(episodeData.date);
+    episodeDate.setUTCDate(parseInt(episodeData.date.split(" ")[0]));
+
     // Insert episode
     const [episode] = await db
       .insert(episodes)
       .values({
         youtubeUrl: episodeData.youtube_url,
-        date: new Date(episodeData.date).toISOString().split("T")[0],
+        date: episodeDate.toISOString().split("T")[0],
       })
       .returning();
 
