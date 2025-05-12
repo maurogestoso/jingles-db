@@ -1,5 +1,5 @@
 import { db } from ".";
-import { artists, authors, episodes, songs, tags, songsToTags } from "./schema";
+import { artists, authors, episodes, songs } from "./schema";
 import { eq } from "drizzle-orm";
 import { readFileSync } from "fs";
 import path from "path";

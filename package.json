@@ -12,7 +12,8 @@
     "db:studio": "dotenvx run -f .env.local -- drizzle-kit studio",
     "db:push": "dotenvx run -f .env.local -- drizzle-kit push",
     "db:push:prod": "dotenvx run -f .env.production -- drizzle-kit push",
-    "db:dump": "sqlite3 local.db \".dump\" > local-db_dump.sql"
+    "db:dump": "sqlite3 local.db \".dump\" > local-db_dump.sql",
+    "seed:episode:prod": "dotenvx run -f .env.production -- tsx ./app/db/seed-episode.ts"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.39.0",
